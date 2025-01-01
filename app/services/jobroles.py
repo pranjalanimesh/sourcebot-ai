@@ -1,6 +1,6 @@
 from typing import List
 from pydantic import BaseModel, Field
-from ell import ell
+import ell
 from openai import OpenAI
 import os
 from dotenv import load_dotenv

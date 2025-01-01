@@ -22,7 +22,7 @@ def get_schools(user_query):
 
 @ell.complex(model="gpt-4o", response_format=SchoolsModel, temperature=0.5, client=OpenAI(api_key=os.getenv("OPENAI_API_KEY")))
 def school_search_tags(school_name: str) -> SchoolsModel:
-    """You are a school search keyword generator. Given the school name, you have to generate the list of keywords which can be used in google search. You can generate upto 5 short keywords. Try to cover all possible permutations in which the school name is used on linkedin. keep it as short as possible. 
+    """You are a school search keyword generator. Given the school name, you have to generate the list of keywords which can be used in google search. You can generate upto 5 short keywords. Try to cover all possible permutations in which the school name is used on linkedin. keep it as short as possible. keep it lowercased.
     NOTE: There should be atleast one with only the main school name"""
     return f"Generate search tags for the given school name: {school_name}"
 

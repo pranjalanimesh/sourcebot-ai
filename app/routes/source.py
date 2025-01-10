@@ -7,16 +7,31 @@ router = APIRouter()
 
 @router.post("/source")
 async def source(
-    job_role: Any | None = Body(default=None),
-    company: str | None = Body(default=None),
-    education: str | None = Body(default=None),
-    years_of_experience: str | None = Body(default=None),
-    location: str | None = Body(default=None),
-    additional_prompt: str | None = Body(default=None),
-    num_results: int = Body(default=10)
-    ):
-    print(job_role, company, education, years_of_experience, 
-          location, additional_prompt, num_results)
-    
-    results = scrape_talents(education, company, job_role, years_of_experience, location, additional_prompt, num_results)
-    return results
+      job_role: Any | None = Body(default=None),
+      company: str | None = Body(default=None),
+      education: str | None = Body(default=None),
+      years_of_experience: str | None = Body(default=None),
+      location: str | None = Body(default=None),
+      additional_prompt: str | None = Body(default=None),
+      num_results: int = Body(default=10)):
+
+      print(job_role, company, education, years_of_experience, location, additional_prompt, num_results)
+
+      if job_role is not None and job_role.strip() == "":
+            job_role = None
+      if company is not None and company.strip() == "":
+            company = None
+      if education is not None and education.strip() == "":
+            education = None
+      if years_of_experience is not None and years_of_experience.strip() == "":
+            years_of_experience = None
+      if location is not None and location.strip() == "":
+            location = None
+      if additional_prompt is not None and additional_prompt.strip() == "":
+            additional_prompt = None
+
+      if num_results>20:
+            num_results=20
+
+      results = scrape_talents(education, company, job_role, years_of_experience, location, additional_prompt, num_results)
+      return results

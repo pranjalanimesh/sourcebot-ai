@@ -12,7 +12,7 @@ class SchoolsModel(BaseModel):
 
 @ell.complex(model="gpt-4o", response_format=SchoolsModel, temperature=0.5, client=OpenAI(api_key=os.getenv("OPENAI_API_KEY")))
 def schools(user_query: str) -> SchoolsModel:
-    """You have good knowledge of different schools and colleges. Given the user query, you have to list a list of similar schools. You can generate upto 5."""
+    """You have good knowledge of different schools and colleges. Given the user query, you have to list a list of similar schools. You can generate upto 5. List the names in lowercase. Include variants of the name of school if any."""
     return f"Given user query: {user_query}"
 
 def get_schools(user_query):

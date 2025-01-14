@@ -13,8 +13,8 @@ ell.init()
 
 @ell.complex(model="gpt-4o", response_format=CompanyModel, temperature=0.5, client=OpenAI(api_key=os.getenv("OPENAI_API_KEY")))
 def companies(user_query: str) -> CompanyModel:
-    """You have good knowledge of all different types of companies. make a list of all the companies in the given user query. All the company names should be lowercased. You can also return empty list if no information about the companies is found"""
-    return f"List different companies for the given user query: {user_query}"
+    """You have good knowledge of all different types of companies. make a list of all the companies included in the given user query. Only the companies mentioned in the user query should be listed and no more. All the company names should be lowercased. You can also return empty list if no companies are found"""
+    return f"Given user query: {user_query}"
 
 def get_companies(user_query):
     result = companies(user_query)

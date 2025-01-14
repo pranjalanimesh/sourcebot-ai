@@ -7,7 +7,7 @@ router = APIRouter()
 
 @router.post("/source")
 async def source(
-      job_role: Any | None = Body(default=None),
+      job_role: str | None = Body(default=None),
       company: str | None = Body(default=None),
       education: str | None = Body(default=None),
       years_of_experience: str | None = Body(default=None),
@@ -33,5 +33,5 @@ async def source(
       if num_results>20:
             num_results=20
 
-      results = scrape_talents(education, company, job_role, years_of_experience, location, additional_prompt, num_results)
+      results = scrape_talents(job_role, company, education, years_of_experience, location, additional_prompt, num_results)
       return results

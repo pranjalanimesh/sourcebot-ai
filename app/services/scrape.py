@@ -21,7 +21,7 @@ def scrape_talents(job_role, company, education, yoe, loc, additional_prompt, nu
     job_roles = []
     if job_role is not None:
         print('Getting similar jobroles')
-        job_roles = get_job_roles(job_role + "|" + additional_prompt)
+        job_roles = get_job_roles(job_role)
 
     print(job_roles)
 
@@ -29,7 +29,7 @@ def scrape_talents(job_role, company, education, yoe, loc, additional_prompt, nu
     companies = []
     if company is not None:
         print('Getting similar companies')
-        companies = get_companies(company + "|" + additional_prompt)
+        companies = get_companies(company)
     print(companies)
 
 
@@ -37,7 +37,7 @@ def scrape_talents(job_role, company, education, yoe, loc, additional_prompt, nu
     schools = []
     if education is not None:
         print('Getting similar schools')
-        schools = get_schools(education + "|" + additional_prompt)
+        schools = get_schools(education)
     
     print(schools)
 
@@ -100,16 +100,6 @@ def scrape_talents(job_role, company, education, yoe, loc, additional_prompt, nu
     results = search(dork, num_results)
 
     return results
-
-    return {
-        "job_role": job_role,
-        "company": company,
-        "education": education,
-        "yoe": yoe,
-        "loc": loc,
-        "additional_prompt": additional_prompt,
-        "num_results": num_results
-    }
 
 
 

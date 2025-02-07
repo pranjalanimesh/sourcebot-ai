@@ -30,8 +30,8 @@ async def source(
       if additional_prompt is not None and additional_prompt.strip() == "":
             additional_prompt = None
 
-      if num_results>20:
-            num_results=20
+      if num_results>100:
+            num_results=100
 
       results = scrape_talents(job_role, company, education, years_of_experience, location, additional_prompt, num_results)
       return results

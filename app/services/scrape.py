@@ -2,7 +2,8 @@ from app.services.jobroles import get_job_roles
 from app.services.companies import get_companies
 from app.services.schools import get_schools, get_school_search_tags
 
-from googlesearch import search
+from serpapi import search
+
 from typing import List
 from pydantic import BaseModel, Field
 import ell
@@ -97,9 +98,9 @@ def scrape_talents(job_role, company, education, yoe, loc, additional_prompt, nu
     print("number of results to give", num_results)
     print(type(num_results))
 
-    results = search(dork, num_results)
+    results = search(q=dork, engine="google", num=num_results, api_key=os.getenv("SERPAPI_API_KEY"))
 
-    return results
+    return results['organic_results']
 
 
 

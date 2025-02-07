@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Body, HTTPException
 from bson import ObjectId
 from typing import Any, List
 from app.services.scrape import scrape_talents
+from app.services.source_with_jd import scrape_talents_with_jd
 
 router = APIRouter()
 
@@ -34,4 +35,20 @@ async def source(
             num_results=100
 
       results = scrape_talents(job_role, company, education, years_of_experience, location, additional_prompt, num_results)
+      return results
+
+@router.post("/sourceWithJD")
+async def source_with_jd(
+      job_description: str | None = Body(default=None),
+      location: str | None = Body(default=None),
+      num_results: int = Body(default=20)):
+
+      if num_results>100:
+            num_results=100
+      
+      if location is not None and location.strip() == "":
+            location = None
+      
+
+      results = scrape_talents_with_jd(job_description, location, num_results)
       return results

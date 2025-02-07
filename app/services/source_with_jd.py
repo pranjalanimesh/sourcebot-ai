@@ -14,7 +14,6 @@ load_dotenv()
 
 def scrape_talents_with_jd(job_description, location="Mumbai, India", num_results=20):
     # Your code here
-    
     class GoogleDork(BaseModel):
         dork: str = Field(..., title="Google dork to search for the suitable candidates")
 
@@ -38,8 +37,9 @@ def scrape_talents_with_jd(job_description, location="Mumbai, India", num_result
     print("number of results to give", num_results)
     print(type(num_results))
 
-    results = search(q=dork, engine="google", num=num_results, location="Mumbai, India", api_key=os.getenv("SERPAPI_API_KEY"))
+    results = search(q=dork, engine="google", num=num_results, location=location, api_key=os.getenv("SERPAPI_API_KEY"))
 
+    
     return results['organic_results']
 
 

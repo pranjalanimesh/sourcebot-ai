@@ -39,16 +39,25 @@ async def source(
 
 @router.post("/sourceWithJD")
 async def source_with_jd(
-      job_description: str | None = Body(default=None),
-      location: str | None = Body(default=None),
-      num_results: int = Body(default=20)):
+    job_description: str | None = Body(default=None),
+    location: str | None = Body(default=None),
+    num_results: int = Body(default=20)
+):
+    try:
+        # Limit max results to 100
+        if num_results > 100:
+            num_results = 100
 
-      if num_results>100:
-            num_results=100
-      
-      if location is not None and location.strip() == "":
+        # Normalize empty location to None
+        if location is not None and location.strip() == "":
             location = None
-      
 
-      results = scrape_talents_with_jd(job_description, location, num_results)
-      return results
+        # Call the scraping function
+        results = scrape_talents_with_jd(job_description, location, num_results)
+        
+        return results
+
+    except ValueError as ve:
+        raise HTTPException(status_code=400, detail=f"Invalid input: {str(ve)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")

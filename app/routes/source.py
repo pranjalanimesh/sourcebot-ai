@@ -55,6 +55,8 @@ async def source_with_jd(
         # Call the scraping function
         results = scrape_talents_with_jd(job_description, location, num_results)
         
+        if not results or len(results) == 0:
+            raise HTTPException(status_code=404, detail="No matching profiles found")
         return results
 
     except ValueError as ve:

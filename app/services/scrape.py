@@ -74,7 +74,6 @@ def scrape_talents(job_role, company, education, yoe, loc, additional_prompt, nu
     if len(job_roles)>0:
         user_query += f"\n job_roles: {' '.join(job_roles)}"
     if len(companies) > 0:
-
         user_query += f"\n companies: {' '.join(companies)}"
     if len(schools) > 0:
         user_query += f"\n schools: {' '.join(schools)}"
@@ -98,9 +97,26 @@ def scrape_talents(job_role, company, education, yoe, loc, additional_prompt, nu
     print("number of results to give", num_results)
     print(type(num_results))
 
-    results = search(q=dork, engine="google", num=num_results, api_key=os.getenv("SERPAPI_API_KEY"))
-
-    return results['organic_results']
+    try:
+        results = search(q=dork, engine="google", num=num_results, api_key=os.getenv("SERPAPI_API_KEY"))
+        
+        # Check if results is None or empty
+        if not results:
+            print("No results returned from SerpAPI")
+            return []
+            
+        # Check if organic_results exists in the response
+        if 'organic_results' not in results:
+            print("No organic_results in SerpAPI response")
+            print("Full response:", results)
+            return []
+            
+        return results['organic_results']
+        
+    except Exception as e:
+        print(f"Error during SerpAPI search: {str(e)}")
+        print(f"Search query was: {dork}")
+        return []
 
 
 

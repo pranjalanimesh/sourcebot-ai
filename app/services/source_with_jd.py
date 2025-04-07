@@ -37,10 +37,26 @@ def scrape_talents_with_jd(job_description, location="Mumbai, India", num_result
     print("number of results to give", num_results)
     print(type(num_results))
 
-    results = search(q=dork, engine="google", num=num_results, location=location, api_key=os.getenv("SERPAPI_API_KEY"))
-
-    
-    return results['organic_results']
+    try:
+        results = search(q=dork, engine="google", num=num_results, location=location, api_key=os.getenv("SERPAPI_API_KEY"))
+        
+        # Check if results is None or empty
+        if not results:
+            print("No results returned from SerpAPI")
+            return []
+            
+        # Check if organic_results exists in the response
+        if 'organic_results' not in results:
+            print("No organic_results in SerpAPI response")
+            print("Full response:", results)
+            return []
+            
+        return results['organic_results']
+        
+    except Exception as e:
+        print(f"Error during SerpAPI search: {str(e)}")
+        print(f"Search query was: {dork}")
+        return []
 
 
 
